@@ -16,7 +16,6 @@ def MessageRequest(userInput):
     elif userInSplit[0] == 'bye':
         print ("end connection")
     
-    fileNameLength=len(userInSplit[1])
 
     if len(userInSplit)==2:    
         messageRequest = [opcode, len(userInSplit[1]), userInSplit[1]]

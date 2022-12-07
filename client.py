@@ -3,69 +3,41 @@ from DefMessageRequest import *
 from DefToText import *
 from DefMessageResponse import *
 
-userServerIP=input('input your server IP address: ')
-userServerPort=input('input your server port: ')
+#userServerIP=str(input('input your server IP address: '))
+#userServerPort=int(input('input your server port: '))
+
+userServerIP='192.168.0.101'
+userServerPort=49664
+
 userIn=input('input your instruction: ')
+userInWord=userIn.split()
 
-userMessageRequest = MessageRequest(userIn)
+clientSocket=socket(AF_INET, SOCK_STREAM)
+clientSocket.connect((userServerIP, userServerPort))
 
-#clientSocket=socket(AF_INET, SOCK_STREAM)
-#clientSocket.connect(userServerIP, userServerPort)
+userMessageRequest = MessageRequest(userIn).split()
 
-#clientSocket.send(userMessageRequest)
+req=clientSocket.send(MessageRequest(userIn).encode())
 
-print(userMessageRequest)
-split=userMessageRequest.split()
-
-translated=[]
-i=2
-while i<len(split):
-    if len(split[int(i)]) == 8:
-        translated.append(toText(split[int(i)]))
-    else:
-        translated.append(" ")
-    i=i+1
-
-finalTranslation = ''.join(translated)
-print(finalTranslation)
-
-validity = 0
-#validity types
-#0 = correct put / correct change
-#1 = correct get
-#2 = file not found
-#3 = unknown request
-#4 = unsuccesful change
-#5 = help response
-
-if split[0] == "000":
-    if len(split)==3:
-        #put file name
-    else:
-        validity = 3
-
-elif split[0] == "001":
-    if len(split)==3:
-        #get file name
-        #need to find file size
-        size=0
-    else:
-        validity=3
-        .
-elif split[0] == "010":
-    if len(split)==4:
-        #change file name
-    else:
-        validity=3
-elif split[9] == "011":
-    if len(split)==1:
-        validity=5
-        print("put change get help bye")
-    else:
-        validity=3
-else:
-    validty = 3
-    print ("invalid opcode")
+if userMessageRequest[0] == "000":
+    with open(userInWord[1], 'rb') as file:
+        data=file.read()
+    ul=clientSocket.send(data)
     
+elif userMessageRequest[0] == "001":
+    dl=clientSocket.recv(4096)
+    
+elif userMessageRequest[0] == "010":
+    dl=clientSocket.recv(4096)
 
-userMessageResponse = MessageResponse(userIn, validity, size)
+elif userMessageRequest[0] == "011":
+    print("put change get help bye")
+
+elif len(str(userMessageRequest[0])) != 3:
+    print ("invalid opcode")
+
+resp=clientSocket.recv(4096)
+
+clientSocket.close()
+
+
