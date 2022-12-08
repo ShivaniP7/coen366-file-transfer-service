@@ -1,26 +1,27 @@
 from DefToBinary import *
 
-def MessageResponse(clientInput, validity, size):
+def MessageResponse(messageRequest, validity, size):
     
     opcode = "000"
-    MessageResponse=[]
-    MessageResponse[0]=opcode
-    clientInSplit=clientInput.split()
-    
+    #MessageResponse=[]
+    messageRequestSplit=messageRequest.split()
     if validity==0:
         opcode="000"
+        MessageResponse = [opcode]
     elif validity==1:
         opcode="001"
-        MessageResponse[1]=clientInSplit[1]
-        MessageResponse[2]=clientInSplit[2]
-        MessageResponse[3]=toBinary(size)
+        MessageResponse = [messageRequest, str(bin(size)[2:])]
     elif validity==2:
         opcode="010"
+        MessageResponse = [opcode]
     elif validity==3:
         opcode="011"
+        MessageResponse = [opcode]
     elif validity==4:
         opcode="101"
+        MessageResponse = [opcode]
     elif validity==5:
         opcode="110"
-    
+        MessageResponse = [opcode]
+        
     return ' '.join(MessageResponse)
