@@ -5,8 +5,7 @@ from DefMessageResponse import *
 import os
 from os import path
 
-#!!! userServerIP=socket.gethostname()
-userServerIP='192.168.0.101'
+userServerIP= '0.0.0.0'
 userServerPort=18000
 
 serverSocket=socket(AF_INET, SOCK_STREAM)
