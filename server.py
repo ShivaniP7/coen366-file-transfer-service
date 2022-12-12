@@ -89,6 +89,8 @@ while True:
             validity=3
     elif recMessageRequestSplit[0] == "011":
         if len(opTran)==1:
+            Commands="commands: put change get help bye"
+            connS.send(Commands.encode())
             validity=5
         else:
             validity=3
