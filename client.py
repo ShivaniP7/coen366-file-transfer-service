@@ -3,10 +3,8 @@ from DefMessageRequest import *
 from DefToText import *
 from DefMessageResponse import *
 
-#!!! needs to be user input !!!
-#!!! userServerIP = input(str("Please enter the host address of the sender:"))
-userServerIP='192.168.0.101'
-userServerPort=18000
+userServerIP = input(str("Enter your ip address: "))
+userServerPort=int(input("Enter your port number: "))
 
 clientSocket=socket(AF_INET, SOCK_STREAM)
 clientSocket.connect((userServerIP, userServerPort))
