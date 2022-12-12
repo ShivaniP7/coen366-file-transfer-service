@@ -1,3 +1,7 @@
+#Authors: Shivani Patel - 40127768 and Kamar Kibbi - 40168395
+#Purpose: Converts user input into opcode + converts file names into binary bytes
+#Together, we are the sole authors of this file
+
 from DefToBinary import *
 
 def MessageRequest(userInput):
@@ -15,6 +19,8 @@ def MessageRequest(userInput):
         opcode= "011" 
     elif userInSplit[0] == 'bye':
         print ("end connection")
+    else:
+        opcode='invalid'
     
 
     if len(userInSplit)==2:    
