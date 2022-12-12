@@ -1,3 +1,7 @@
+#Authors: Shivani Patel - 40127768 and Kamar Kibbi - 40168395
+#Purpose:Takes individual binary byte, and converts it into its alphabetical equivalent
+#Together, we are the sole authors of this file
+
 def toText(a):
     m=""
     if a == "01000001":
