@@ -19,7 +19,7 @@ if debugFlag == '1':
     print('The request being sent to server is:' + MessageRequest(userIn))
 req=clientSocket.send(MessageRequest(userIn).encode())
 
-if len(userInWord[1]) >= 31:
+if len(userIn[1]) > 31:
     print("file name too big")
     
 elif userIn=='bye':
@@ -56,7 +56,8 @@ elif userMessageRequest[0] == "010":
         print (userInWord[1]+ " has been changed into "+userInWord[2])
 
 elif userMessageRequest[0] == "011":
-    print("commands: put change get help bye")
+    dl=clientSocket.recv(4096)
+    print(dl.decode())
 
 elif len(str(userMessageRequest[0])) != 3:
     print ("invalid opcode")
