@@ -1,3 +1,7 @@
+#Authors: Shivani Patel - 40127768 and Kamar Kibbi - 40168395
+#Purpose: Converts alphabetical string into string of binary bytes
+#Together, we are the sole authors of this file
+
 def toBinary(a):
     import math
     l,m=[],[]
