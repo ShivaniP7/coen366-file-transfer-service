@@ -2,6 +2,15 @@ from DefToBinary import *
 
 def MessageResponse(messageRequest, validity, size):
     
+#if statments for what happens with each validity 
+#validity types
+    #0 = correct put / correct change
+    #1 = correct get
+    #2 = file not found  !!
+    #3 = unknown request
+    #4 = unsuccesful change !!
+    #5 = help response
+
     opcode = "000"
     #MessageResponse=[]
     messageRequestSplit=messageRequest.split()
