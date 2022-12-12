@@ -1,3 +1,7 @@
+#Authors: Shivani Patel - 40127768 and Kamar Kibbi - 40168395
+#Purpose: Server recieves request from client, does what request asks, and then sends response to client
+#Together, we are the sole authors of this file
+
 from socket import *
 from DefMessageRequest import *
 from DefToText import *
