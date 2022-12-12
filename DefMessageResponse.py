@@ -1,3 +1,7 @@
+#Authors: Shivani Patel - 40127768 and Kamar Kibbi - 40168395
+#Purpose: Takes the validity from server, and the message request, and creates a response
+#Together, we are the sole authors of this file
+
 from DefToBinary import *
 
 def MessageResponse(messageRequest, validity, size):
