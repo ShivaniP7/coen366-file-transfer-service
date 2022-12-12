@@ -1,3 +1,7 @@
+#Authors: Shivani Patel - 40127768 and Kamar Kibbi - 40168395
+#Purpose: Client program in charge of getting user input, creaing message request, sending request + other info to server, and recieving response
+#Together, we are the sole authors of this file
+
 from socket import *
 from DefMessageRequest import *
 from DefToText import *
