@@ -5,6 +5,7 @@ from DefMessageResponse import *
 import os
 from os import path
 
+#connect to client
 userServerIP= '0.0.0.0'
 userServerPort=18000
 
@@ -17,16 +18,16 @@ debugFlag=input('if you would like to see the message requests and response, ple
 
 while True:
     connS, add = serverSocket.accept()
-    #usIn=(connS.recv(1024)).decode()
-    #print("Message Request from client: " + usIn)
     
-    #userInWord=usIn.split()
-    
+    #recieve message request from server
     recMessageRequest = (connS.recv(1024)).decode()
+    
+    #allow server to change if they want debug on or not
     if debugFlag == '1':
         print("Message Request Code from client: " + recMessageRequest)
     recMessageRequestSplit=recMessageRequest.split()
 
+    #change binary message request into letters so we can find out file name(s)
     translated=[]
     finalTranslation = ""
     size = 0
@@ -55,13 +56,15 @@ while True:
     #4 = unsuccesful change !!
     #5 = help response
 
+    #recieve data from client file
     if recMessageRequestSplit[0] == "000":
         if len(opTran)==2:
             fileul = connS.recv(4096).decode("utf-8")
             validity=0 #only if file is openable (need to figure that out)
         else:
             validity = 3
-                
+     
+    #send file to client
     elif recMessageRequestSplit[0] == "001":
         if len(opTran)==2:
             fileExists=os.path.exists(opTran[1])
@@ -78,7 +81,8 @@ while True:
                 validity=2
         else:
             validity=3
-                    
+     
+    #rename file 
     elif recMessageRequestSplit[0] == "010":
         if len(opTran)==3:
             os.rename(opTran[1], opTran[2])
@@ -87,6 +91,8 @@ while True:
             print(opTran[1] + " was renamed to " + opTran[2])
         else:
             validity=3
+            
+    #send list of commands to client
     elif recMessageRequestSplit[0] == "011":
         if len(opTran)==1:
             Commands="commands: put change get help bye"
@@ -98,6 +104,7 @@ while True:
         validty = 3
         print ("invalid opcode")
     
+    #create message response and send to client
     userMessageResponse = MessageResponse(recMessageRequest, validity, size)
     if debugFlag == '1':
         print("Message Response Code being sent to client: "  + userMessageResponse)
