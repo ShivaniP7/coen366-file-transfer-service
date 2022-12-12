@@ -14,6 +14,7 @@ serverSocket.bind((userServerIP, userServerPort))
 
 serverSocket.listen(1)
 print('ready')
+debugFlag=input('if you would like to see the message requests and response, please press 1, else press 0: ')
 
 while True:
     connS, add = serverSocket.accept()
@@ -23,7 +24,8 @@ while True:
     #userInWord=usIn.split()
     
     recMessageRequest = (connS.recv(1024)).decode()
-    print("Message Request Code from client: " + recMessageRequest)
+    if debugFlag == '1':
+        print("Message Request Code from client: " + recMessageRequest)
     recMessageRequestSplit=recMessageRequest.split()
 
     translated=[]
@@ -44,8 +46,6 @@ while True:
     translationSplit.insert(0, recMessageRequestSplit[0])
     opTran=translationSplit
         
-    #opTran=[recMessageRequestSplit[0], finalTranslation]
-    print(opTran)
     
     validity = 0
     #validity types
@@ -65,12 +65,18 @@ while True:
                 
     elif recMessageRequestSplit[0] == "001":
         if len(opTran)==2:
-            with open(opTran[1][0:4], 'rb') as file:
-                data=file.read()
-                filedl=connS.send(data)
-                size=len(data)
-                validity=1 #only if file is openable (need to figure that out)
-                print(finalTranslation + " was downloaded successfully")
+            fileExists=os.path.exists(opTran[1])
+            if(fileExists):
+                with open(opTran[1], 'rb') as file:
+                    data=file.read()
+                    filedl=connS.send(data)
+                size=os.path.getsize(opTran[1])
+                print("file sent to client")
+                validity=1
+            else:
+                msg="File Not Found"
+                connS.send(msg.encode())
+                validity=2
         else:
             validity=3
                     
@@ -92,6 +98,7 @@ while True:
         print ("invalid opcode")
     
     userMessageResponse = MessageResponse(recMessageRequest, validity, size)
-    print(userMessageResponse)
+    if debugFlag == '1':
+        print("Message Response Code being sent to client: "  + userMessageResponse)
     response=connS.send(userMessageResponse.encode())
     connS.close()
